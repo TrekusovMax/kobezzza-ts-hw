@@ -3,6 +3,7 @@
 // * `id` (число)
 // * `name` (строка)
 // * `email` (строка, необязательное поле)
+
 export type User = {
   id: number
   name: string
@@ -12,8 +13,10 @@ export type User = {
 type UsersDict = {
   [key: User['id']]: User
 }
-// Напишите функцию `getUserEmail(id: number, users: UsersDict): string | undefined`, которая возвращает email пользователя или `undefined`, если его нет.
+// Напишите функцию `getUserEmail(id: number, users: UsersDict): string | undefined`,
+//  которая возвращает email пользователя или `undefined`, если его нет.
 function getUserEmail(id: number, users: UsersDict): string | undefined {
   const user = users[id]
-  return user ? user.email : undefined
+  return user.email ? user.email : undefined
 }
+

@@ -21,28 +21,23 @@ interface Rectangle extends Shape {
 
 function createCircle(radius: number): Circle {
   return {
-    color: 'green',
     radius,
-    area() {
-      return Math.PI * Math.pow(radius, 2)
-    },
+    color: 'red',
+    area: () => Math.PI * radius ** 2,
   }
 }
 function createRectangle(width: number, height: number): Rectangle {
   return {
-    color: 'red',
     height,
     width,
-    area() {
-      return width * height
-    },
+    color: 'green',
+    area: () => height * width,
   }
 }
 function calcArea(shape: Shape): number {
   return shape.area()
 }
-
-const circle: Circle = createCircle(5)
-const rectangle: Rectangle = createRectangle(20, 30)
-console.log(calcArea(circle))
-console.log(calcArea(rectangle))
+const rect = createRectangle(5, 3)
+const circ = createCircle(2)
+console.log(calcArea(rect))
+console.log(calcArea(circ))
