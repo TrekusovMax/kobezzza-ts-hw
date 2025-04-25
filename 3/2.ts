@@ -1,0 +1,34 @@
+// #### Объединение интерфейсов
+// Объявите интерфейс `User` с полями:
+// * `id` (число)
+// * `name` (строка)
+interface User {
+  id: number
+  name: string
+}
+// Дополните этот же интерфейс (новым объявлением):
+// * `email` (строка, необязательное поле)
+// * `logIn` (метод, возвращает void)
+interface User {
+  logIn: () => void
+  email?: string
+}
+// Создайте объект, соответствующий полному интерфейсу `User`, и напишите функцию:
+const user: User = {
+  id: 1,
+  name: 'Max',
+  email: 'max@mail.ru',
+  logIn: () => console.log('Login!'),
+}
+// Выводит информацию о пользователе
+// Если email есть - включает его в вывод
+// Вызывает user.logIn()
+function printUser(user: User): void {
+  console.log(`Id: ${user.id}; Name: ${user.name} `)
+  if (user.email) {
+    console.log(`Email: ${user.email}`)
+  }
+  user.logIn()
+}
+
+printUser(user)
