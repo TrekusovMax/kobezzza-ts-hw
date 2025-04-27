@@ -14,7 +14,7 @@ type Coordinates = [
 // Если ориентиров нет, выводит только координаты
 function describeLocation(coords: Coordinates): string {
   let res = `Широта: ${coords[0]}, Долгота: ${coords[1]}.`
-  const landmarks = coords.slice(2, coords.length)
+  const landmarks = coords.slice(2)
 
   if (landmarks.length) {
     res += ` Ориентиры: ${landmarks.join(', ')}`

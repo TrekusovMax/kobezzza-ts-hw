@@ -1,36 +1,47 @@
 /**
+ *@typedef {(Object.<string|JSONLike>|JSONLike[]|string|number|boolean|null)}JSONLike
+ */
+
+/**
  * @typedef {Object} DefaultConfigType
  * @property {Object.<string|string>} headers
- * @property {string | json | ArrayBuffer } [body]
- * @property {'json'|'text'|'document'|'buffer'}   [contentType]
+ * @property {(JSONLike | ArrayBuffer)= } [body]
+ * @property {('json'|'text'|'document'|'buffer')=}   [contentType]
  */
 /**
- * @type {DefaultConfigType}
+ * @typedef {{
+ * headers?:{[key:string]:string}
+ * body?:(JSONLike|ArrayBuffer)
+ * contentType?:('json'|'text'|'document'|'buffer')
+ * }} Config2
  * */
+
+/**
+ * @type {DefaultConfigType}
+ */
 const defaultConfig = {
   headers: { Authorization: myToken },
 }
 /**
- * @typedef {Object} ResponseData
- * @property {Object} json
- * @property {string} text
- * @property {Document} document
- * @property {ArrayBuffer} buffer
+ * @typedef {{
+ * json: ()=>Promise<Object>,
+ * text: function ():Promise<string>,
+ * document: function ():Promise<document>,
+ * buffer:function ():Promise<ArrayBuffer>
+ * }} ReturnType
  */
 
 /**
- * @function post
  * @param {string} url
- * @param {DefaultConfigType} params
- * @returns {Promise<ResponseData>}
+ * @param {Config1} params
+ * @returns {ReturnType}
  */
 function post(url, params) {}
 
 /**
- * @function put
  * @param {string} url
- * @param {DefaultConfigType} params
- * @returns {Promise<ResponseData>}
+ * @param {Config1} params
+ * @returns {ReturnType}
  */
 
 function put(url, params) {}
