@@ -2,12 +2,12 @@
 // Объявите два перечисления:
 // * `UserRole` с вариантами: `Admin`, `Editor`, `Viewer`;
 // * `AccountStatus` с вариантами: `Active`, `Suspended`, `Banned`.
-export enum UserRole {
+enum UserRole {
   'Admin',
   'Editor',
   'Viewer',
 }
-export enum AccountStatus {
+enum AccountStatus {
   'Active',
   'Suspended',
   'Banned',

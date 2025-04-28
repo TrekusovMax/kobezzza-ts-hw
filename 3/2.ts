@@ -2,14 +2,14 @@
 // Объявите интерфейс `User` с полями:
 // * `id` (число)
 // * `name` (строка)
-export interface User {
+interface User {
   id: number
   name: string
 }
 // Дополните этот же интерфейс (новым объявлением):
 // * `email` (строка, необязательное поле)
 // * `logIn` (метод, возвращает void)
-export interface User {
+interface User {
   email?: string
   logIn: () => void
 }
