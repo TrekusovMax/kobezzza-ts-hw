@@ -34,3 +34,4 @@ function printUser(user: User): void {
   user.logIn()
 }
 printUser(user)
+

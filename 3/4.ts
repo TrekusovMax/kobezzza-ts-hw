@@ -8,12 +8,12 @@
 //     * age — аналогично, из `data.age`
 
 interface User {
-  name: this['data']['name']
-  age: this['data']['age']
+  get name(): this['data']['name']
+  get age(): this['data']['age']
 
-  readonly data: {
-    name: string
-    age: number
+  data: {
+    readonly name: string
+    readonly age: number
   }
 }
 
@@ -22,9 +22,14 @@ const user: User = {
     name: 'Bob',
     age: 42,
   },
-  name: 'Max',
-  age: 34,
+  get name() {
+    return this.data.name
+  },
+  get age() {
+    return this.data.age
+  },
 }
 
 console.log(user.name)
 console.log(user.age)
+

@@ -19,3 +19,4 @@ function getUserEmail(id: number, users: UsersDict): string | undefined {
   const user = users[id]
   return user.email ? user.email : undefined
 }
+
