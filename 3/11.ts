@@ -20,3 +20,4 @@ const lead: TeamLead = {
   department: 'Development',
   teamSize: 10,
 }
+

@@ -20,13 +20,16 @@ const enum AccessLevel {
 }
 
 class Employee {
-  constructor(private id: number, private accessLevel: AccessLevel) {}
+  private id: number
+  private accessLevel: AccessLevel
 
-  get getData(): AccessEmployee {
-    return this as any
+  constructor(id: number, accessLevel: AccessLevel) {
+    this.id = id
+    this.accessLevel = accessLevel
   }
-  set changeLevel(level: AccessLevel) {
-    this.accessLevel = level
+
+  get unsafe(): AccessEmployee {
+    return this as unknown as AccessEmployee
   }
 
   manager = new AccessManager(this)
@@ -35,12 +38,16 @@ class Employee {
 class AccessManager {
   constructor(protected emploee: Employee) {}
 
+  set changeLevel(level: AccessLevel) {
+    this.emploee.unsafe.accessLevel = level
+  }
+
   check(level: AccessLevel) {
-    return this.emploee.getData.accessLevel === level
+    return this.emploee.unsafe.accessLevel === level
   }
   changeAccessLevel(newLevel: AccessLevel) {
     if (!this.check(newLevel)) {
-      this.emploee.changeLevel = newLevel
+      this.emploee.unsafe.accessLevel = newLevel
     } else {
       console.log(`Employee already has '${newLevel}' level!`)
     }
@@ -50,7 +57,7 @@ class AccessManager {
 const worker = new Employee(1, AccessLevel.low)
 const manager = new AccessManager(worker)
 manager.changeAccessLevel(AccessLevel.low)
-console.log(worker.getData.accessLevel)
+console.log(worker.unsafe.accessLevel)
 
 manager.changeAccessLevel(AccessLevel.medium)
-console.log(worker.getData.accessLevel)
+console.log(worker.unsafe.accessLevel)

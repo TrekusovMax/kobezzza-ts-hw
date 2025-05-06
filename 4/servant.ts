@@ -24,22 +24,6 @@ class Task {
   private priority: TaskPriority
   operator = new TaskServant(this)
 
-  get unsafe() {
-    return {
-      id: this.id,
-      description: this.description,
-      status: this.status,
-      priority: this.priority,
-    }
-  }
-
-  _setStatus(status: TaskStatus): void {
-    this.status = status
-  }
-  _setPriority(priority: TaskPriority): void {
-    this.priority = priority
-  }
-
   constructor({ id, description, priority }: NewTask) {
     this.id = id
     this.description = description
@@ -60,10 +44,10 @@ class TaskServant {
 
   static info(tasksList: Task[]) {
     tasksList.forEach((item) =>
-      console.log(`id: ${item.unsafe.id};
-      description: ${item.unsafe.description};
-      status: ${item.unsafe.status};
-      priority: ${item.unsafe.priority}`),
+      console.log(`id: ${item['id']};
+      description: ${item['description']};
+      status: ${item['status']};
+      priority: ${item['priority']}`),
     )
   }
   static closeAll(tasksList: Task[]) {
@@ -73,7 +57,7 @@ class TaskServant {
   }
   static closeByPriority(tasksList: Task[], priority: TaskPriority) {
     for (const task of tasksList) {
-      if (task.unsafe.priority === priority) {
+      if (task['priority'] === priority) {
         task.operator.setStatus = 'closed'
       }
     }
