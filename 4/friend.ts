@@ -38,10 +38,6 @@ class Employee {
 class AccessManager {
   constructor(protected emploee: Employee) {}
 
-  set changeLevel(level: AccessLevel) {
-    this.emploee.unsafe.accessLevel = level
-  }
-
   check(level: AccessLevel) {
     return this.emploee.unsafe.accessLevel === level
   }
