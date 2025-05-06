@@ -24,20 +24,13 @@ class Task {
   private priority: TaskPriority
   operator = new TaskServant(this)
 
-  getId(): number {
-    return this.id
-  }
-
-  getDescription(): string {
-    return this.description
-  }
-
-  getStatus(): TaskStatus {
-    return this.status
-  }
-
-  getPriority(): TaskPriority {
-    return this.priority
+  get unsafe() {
+    return {
+      id: this.id,
+      description: this.description,
+      status: this.status,
+      priority: this.priority,
+    }
   }
 
   _setStatus(status: TaskStatus): void {
@@ -59,19 +52,18 @@ class TaskServant {
   constructor(public task: Task) {}
 
   set setPriority(priority: TaskPriority) {
-    this.task._setPriority(priority)
+    this.task['priority'] = priority
   }
   set setStatus(status: TaskStatus) {
-    this.task._setStatus(status)
+    this.task['status'] = status
   }
-}
-class TaskManager {
+
   static info(tasksList: Task[]) {
     tasksList.forEach((item) =>
-      console.log(`id: ${item.getId()};
-      description: ${item.getDescription()};
-      status: ${item.getStatus()};
-      priority: ${item.getPriority()}`),
+      console.log(`id: ${item.unsafe.id};
+      description: ${item.unsafe.description};
+      status: ${item.unsafe.status};
+      priority: ${item.unsafe.priority}`),
     )
   }
   static closeAll(tasksList: Task[]) {
@@ -81,7 +73,7 @@ class TaskManager {
   }
   static closeByPriority(tasksList: Task[], priority: TaskPriority) {
     for (const task of tasksList) {
-      if (task.getPriority() === priority) {
+      if (task.unsafe.priority === priority) {
         task.operator.setStatus = 'closed'
       }
     }
@@ -105,11 +97,11 @@ const task3 = new Task({
 })
 const tasksList: Task[] = [task1, task2, task3]
 
-TaskManager.info(tasksList)
+TaskServant.info(tasksList)
 
 task1.operator.setPriority = 'higth'
 task1.operator.setStatus = 'in process'
-TaskManager.info([task1])
+TaskServant.info([task1])
 
-TaskManager.closeByPriority(tasksList, 'higth')
-TaskManager.info(tasksList)
+TaskServant.closeByPriority(tasksList, 'higth')
+TaskServant.info(tasksList)
