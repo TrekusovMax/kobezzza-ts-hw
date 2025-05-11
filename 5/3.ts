@@ -13,7 +13,7 @@
 // Создайте типы литералов для `ShapeType = "circle" | "rectangle"`.
 type ShapeType = 'circle' | 'rectangle'
 
-interface Shape {
+interface Shape extends Record<PropertyKey, unknown> {
   type: ShapeType
 }
 
@@ -36,12 +36,8 @@ interface Rectangle extends Shape {
 // например, со свойствами, `type: "circle", radius: 5`.
 const myShape = {
   type: 'circle',
-} satisfies Shape
-
-const myCircle = {
-  type: 'circle',
   radius: 5,
-} satisfies Circle
+} satisfies Shape
 
 // 3. Ап-каст:
 // Создайте переменную `shape: Shape` и присвойте ей значение `myShape`. Это ап-каст (upcasting).
