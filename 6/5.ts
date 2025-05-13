@@ -6,15 +6,13 @@
 // чтобы метод `transform` возвращал `null`, если `U` является `null`.
 
 interface Mapper<T, U> {
-  transform(data: T): U | null
+  transform(data: T): U extends null ? null : U
 }
 class DataTransformer<T, U> implements Mapper<T, U> {
-  constructor(private callback: (data: T) => U) {}
+  constructor(private callback: (data: T) => U extends null ? null : U) {}
 
-  transform(data: T): U | null {
-    if (typeof data === null) {
-      return null
-    } else return this.callback(data)
+  transform(data: T): U extends null ? null : U {
+    return this.callback(data)
   }
 }
 
