@@ -4,29 +4,35 @@
 // Напишите полиморфную функцию `copyFrom(a: Wrapper, b: Wrapper)`, которая бы копировала из `a` в `b`,
 // но с корректной проверкой типов.
 
-class A {
+export class A {
   sayA() {
     console.log('A')
   }
 }
 
-class B extends A {
+export class B extends A {
   sayB() {
     console.log('B')
   }
 }
 
-class C extends B {
+export class C extends B {
   sayC() {
     console.log('C')
   }
 }
 
+class Wrapper<T> {
+  constructor(public value: T) {}
+}
+function copyFrom(a: Wrapper<B>, b: Wrapper<A>) {
+  b.value = a.value
+}
 const a = new Wrapper(new A())
 
 const b = new Wrapper(new B())
 
-const с = new Wrapper(new С())
+const с = new Wrapper(new C())
 
 // @ts-expect-error
 copyFrom(a, b)

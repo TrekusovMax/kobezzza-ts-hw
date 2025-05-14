@@ -14,10 +14,14 @@ class B extends A {
   }
 }
 
-class C extends B {
+export class C extends B {
   sayC() {
     console.log('C')
   }
+}
+
+class Wrapper<in out T1, out T2> {
+  constructor(public value1: T1, public value2: T2) {}
 }
 
 let a = new Wrapper(new A(), new A())

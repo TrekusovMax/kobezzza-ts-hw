@@ -20,7 +20,11 @@ class C extends B {
   }
 }
 
-let a = new Wrapper(new A())
+class Wrapper<out T> {
+  constructor(public value: T) {}
+}
+
+export let a = new Wrapper(new A())
 
 let b = new Wrapper(new B())
 

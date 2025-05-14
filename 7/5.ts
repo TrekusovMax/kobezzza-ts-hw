@@ -19,8 +19,11 @@ class C extends B {
     console.log('C')
   }
 }
+class Wrapper<in T> {
+  constructor(_value: T) {}
+}
 
-let a = new Wrapper(new A())
+export let a = new Wrapper(new A())
 
 let b = new Wrapper(new B())
 
