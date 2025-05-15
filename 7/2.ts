@@ -25,8 +25,9 @@ export class C extends B {
 class Wrapper<T> {
   constructor(public value: T) {}
 }
-function copyFrom<T extends B, U extends A>(a: Wrapper<T>, b: Wrapper<U>) {
-  ;(b as Wrapper<A>).value = a.value
+
+function copyFrom<T extends U, U>(a: Wrapper<T>, b: Wrapper<U>) {
+  b.value = a.value
 }
 const a = new Wrapper(new A())
 
