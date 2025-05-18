@@ -19,7 +19,7 @@ const enum AccessLevel {
   hight = 'hight',
 }
 
-class Employee {
+export class Employee {
   private id: number
   private accessLevel: AccessLevel
 

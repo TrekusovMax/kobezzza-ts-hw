@@ -61,7 +61,7 @@ class Renderer implements AbstactFigure {
   }
 }
 
-const circle = new SimpleRender('circle')
+export const circle = new SimpleRender('circle')
 const square = new DetailRender('10', 'square')
 
 const SVGRender = new Renderer(circle)
