@@ -7,7 +7,7 @@
 //     * name — должно автоматически брать тип из `data.name` через `this`
 //     * age — аналогично, из `data.age`
 
-interface User {
+export interface User {
   get name(): this['data']['name']
   get age(): this['data']['age']
 
@@ -32,4 +32,3 @@ const user: User = {
 
 console.log(user.name)
 console.log(user.age)
-

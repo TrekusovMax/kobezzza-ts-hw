@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "jsdoc-to-markdown": "^9.1.1"
+  },
+  "dependencies": {
+    "@types/node": "^22.15.21"
   }
 }
