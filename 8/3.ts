@@ -36,11 +36,11 @@ type Sub<A extends number, B extends number> = BuildTuple<A> extends [
   ? Negate<Length<R>>
   : 0
 
-type Add<A extends number, B extends number> = IsNegative<A> extends true
+type Add<A extends number, B extends number> = Negate<A> extends B
+  ? 0
+  : IsNegative<A> extends true
   ? IsNegative<B> extends true
     ? Negate<Length<[...BuildTuple<Abs<A>>, ...BuildTuple<Abs<B>>]>>
-    : Negate<A> extends B
-    ? 0
     : never
   : Length<[...BuildTuple<A>, ...BuildTuple<B>]>
 
