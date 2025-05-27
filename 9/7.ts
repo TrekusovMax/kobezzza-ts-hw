@@ -1,10 +1,20 @@
 //#### Асинхронные Деструкторы объектов: обертка для файловых дескрипторов
 
 
-import * as fs from "node:file/promise"
+import * as fs from "node:fs/promises"
 
 class File {
-    constructor(public handle: fs.FileHandle) {}
+    constructor(public handle: fs.FileHandle) { }
+    async [Symbol.asyncDispose]() {
+        try {
+            await this.handle.close()
+            console.log(`FD ${this.handle.fd} closed`)
+            
+        } catch (error) {
+            console.error(`Failed to close FD ${this.handle.fd}:`, error)
+        }
+        
+    }
 }
 
 (async () => {
@@ -13,4 +23,4 @@ class File {
 
     await file.handle.write("test");
     await file2.handle.write("test"); // Исключение, но все файловые дескрипторы должны закрыться
-})();
+})()

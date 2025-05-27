@@ -4,16 +4,26 @@
 // При освобождении обертки должен освобождаться и дескриптор.
 
 
-import * as fs from "node:file"
+import * as fs from "node:fs"
 
 class File {
-    constructor(public fd: number) {}
+    constructor(public fd: number) { }
+    [Symbol.dispose]() {
+        try {
+            fs.closeSync(this.fd)
+            console.log(`FD ${this.fd} closed`);
+            
+        } catch (error) {
+            console.error(`Failed to close FD ${this.fd}:`, error);
+        }
+        
+    }
 }
 
 {
     using file = new File(fs.openSync("./example.txt", "w"));
     using file2 = new File(fs.openSync("./example2.txt", "r"));
     
-    fs.writeSync(file, "test");
-    fs.writeSync(file2, "test"); // Исключение, но все файловые дескрипторы должны закрыться
+    fs.writeSync(file.fd, "test");
+    fs.writeSync(file2.fd, "test"); // Исключение, но все файловые дескрипторы должны закрыться
 }
