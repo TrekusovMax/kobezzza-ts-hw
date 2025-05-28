@@ -6,96 +6,43 @@
 // Декоратор `fromLocalStorage` пытается загрузить данные для свойства из `localStorage` (если они там есть)
 // используя ключ `${имя класса}.${имя свойства}`.
 
-/* function validate<T>(validator: (value: T) => boolean) {
-  return function<This> (
-    target: undefined,
-    context: ClassFieldDecoratorContext<This, T>,
-  ) {
-    const key = Symbol(`${String(context.name)}`)
-
-    return {
-      get(this: any) {
-        return this[key]
-      },
-      set(this: any, value: T) {
-        if (!validator(value)) {
-          throw new Error(
-            `Invalid value for '${String(context.name)}': ${JSON.stringify(
-              value,
-            )}`,
-          )
-        }
-        this[key] = value
-      },
-      init(initialValue: T) {
-        if (!validator(initialValue)) {
-          throw new Error(
-            `Invalid initial value for '${String(
-              context.name,
-            )}': ${JSON.stringify(initialValue)}`,
-          )
-        }
-        return initialValue
-      },
-    }
-  }
-} */
 function validate<T>(validator: (value: T) => boolean) {
   return function <This>(
-    target: undefined,
-    context: ClassFieldDecoratorContext<This, T>,
+    _target: undefined,
+    ctx: ClassFieldDecoratorContext<This, T>,
   ) {
-    const key = Symbol(`${String(context.name)}`)
-
-    return {
-      get(this: any) {
-        return this[key]
-      },
-      set(this: any, value: T) {
-        if (!validator(value)) {
-          throw new Error(
-            `Invalid value for '${String(context.name)}': ${JSON.stringify(
-              value,
-            )}`,
-          )
-        }
-        this[key] = value
-      },
-      init(initialValue: T) {
-        if (!validator(initialValue)) {
-          throw new Error(
-            `Invalid initial value for '${String(
-              context.name,
-            )}': ${JSON.stringify(initialValue)}`,
-          )
-        }
-        return initialValue
-      },
-    }
+    const key = `${String(ctx.name)}`
+    ctx.addInitializer(function (this: any) {
+      if (!validator(this[key])) {
+        throw new TypeError(
+          `Invalid value for '${String(ctx.name)}': ${JSON.stringify(
+            this[key],
+          )}`,
+        )
+      }
+    })
   }
 }
 
-function fromLocalStorage<This>(
+function fromLocalStorage<This extends { constructor: Function }>(
   _target: undefined,
   ctx: ClassFieldDecoratorContext<This, unknown>,
 ) {
   return function (this: This) {
-    const key = `${this?.constructor.name}.${String(ctx.name)}`
-
-    /* const data = localStorage.getItem(key)
+    const key = `${this.constructor.name}.${String(ctx.name)}`
 
     try {
-      return data ? JSON.parse(data) : { name: 'Max', age: 34 }
+      const data = localStorage.getItem(key)
+      return data ? JSON.parse(data) : undefined
     } catch {
-      return { name: 'Max', age: 34 }
-      } */
-    return { name: 'Max', age: 34 }
+      return undefined
+    }
   }
 }
 class Example {
   @validate(({ age }) => typeof age === 'number')
   @fromLocalStorage
-  store: { name: string; age: number } = { name: 'Max', age: 34 }
+  store: { name: string; age: number } = { name: 'Bob', age: 42 }
 }
 
 new Example()
