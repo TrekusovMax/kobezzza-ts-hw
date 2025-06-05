@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "es2022",
+    "strict": true,
+    "sourceMap": true,
+    "declarationDir": "./types",
+    "declaration": true,
+    "allowJs": true
+  },
+  "include": [
+    "src/app",
+    "src/types",
+    "src/app/main.ts",
+    "src/app/globals.d.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "dist",
+    "node_modules",
+    "temp"
+  ],
+  "files": ["src/app/main.ts"],
+  "compileOnSave": true
+}
